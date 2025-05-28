@@ -156,7 +156,7 @@ elif page == "Feature Correlation Heatmap":
         df = st.session_state["df"]
         corr = df[FEATURE_COLUMNS].corr()
         fig, ax = plt.subplots(figsize=(12, 10))
-        sns.heatmap(corr, annot=True, cmap='coolwarm', fmt=".2f", ax=ax)
+        sns.heatmap(corr, annot=True, cmap='magma', fmt=".2f", ax=ax)
         ax.set_title("Correlation Heatmap of Features")
         st.pyplot(fig)
     else:
