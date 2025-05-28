@@ -10,7 +10,6 @@ from sklearn.metrics import (
 
 st.set_page_config(page_title="Drought Predictor", layout="wide")
 
-
 LABEL_MAP = {
     0: 'No Drought',
     1: 'Moderate Drought',
@@ -39,8 +38,8 @@ except Exception as e:
     scaler, model = None, None
     st.sidebar.error(f"Failed to load model or scaler: {e}")
 
-page = st.sidebar.selectbox("🗂️ Navigate", [
-    "Upload Data", "Prediction Results", "Confusion Matrix", 
+page = st.sidebar.selectbox("📂 Navigate", [
+    "Upload Data", "Prediction Results", 
     "Feature Importance", "Feature Correlation Heatmap"
 ])
 
@@ -64,14 +63,16 @@ def show_metrics(df):
         st.write(f"📌 **Precision (Weighted):** `{precision_score(y_true, y_pred, average='weighted', zero_division=0):.4f}`")
         st.write(f"📈 **Recall (Weighted):** `{recall_score(y_true, y_pred, average='weighted'):.4f}`")
         st.write(f"📊 **F1 Score (Weighted):** `{f1_score(y_true, y_pred, average='weighted', zero_division=0):.4f}`")
-        st.write(f"📊 **Recall (Macro):** `{recall_score(y_true, y_pred, average='macro'):.4f}`")
-        st.write(f"📊 **Recall (Micro):** `{recall_score(y_true, y_pred, average='micro'):.4f}`")
+
+        cm = confusion_matrix(y_true, y_pred, labels=list(LABEL_MAP.keys()))
+        st.subheader("🧮 Confusion Matrix (List Format)")
+        st.code(str(cm.tolist()))
     else:
-        st.info("True labels (`score` column) not found — evaluation metrics unavailable.")
+        st.info("True labels (`score` column) not found — evaluation metrics and confusion matrix unavailable.")
 
 # --- Upload Data Tab ---
 if page == "Upload Data":
-    st.header("📤 Upload Your Data File")
+    st.header("📄 Upload Your Data File")
     uploaded_file = st.file_uploader("Upload a CSV or Excel file", type=["csv", "xlsx"])
 
     if uploaded_file and model and scaler:
@@ -92,13 +93,6 @@ if page == "Upload Data":
 
         st.session_state.df = df
         st.session_state.predicted = True
-
-        if "score" in df.columns:
-            valid = df[df["score"].isin(LABEL_MAP.keys())]
-            cm = confusion_matrix(valid["score"], valid["prediction"], labels=list(LABEL_MAP.keys()))
-            st.session_state.confusion_matrix = cm
-        else:
-            st.info("True labels (`score` column) not found — confusion matrix and metrics not available.")
 
         show_metrics(df)
 
@@ -140,22 +134,6 @@ elif page == "Prediction Results":
         )
     else:
         st.info("Run predictions first in 'Upload Data' tab.")
-
-# --- Confusion Matrix Tab ---
-elif page == "Confusion Matrix":
-    st.header("Confusion Matrix")
-
-    if "confusion_matrix" in st.session_state:
-        cm = st.session_state["confusion_matrix"]
-        cm_df = pd.DataFrame(cm, index=[LABEL_MAP[i] for i in LABEL_MAP], columns=[LABEL_MAP[i] for i in LABEL_MAP])
-
-        fig, ax = plt.subplots(figsize=(8, 6))
-        sns.heatmap(cm_df, annot=True, fmt='d', cmap='Blues', ax=ax)
-        ax.set_xlabel("Predicted")
-        ax.set_ylabel("True")
-        st.pyplot(fig)
-    else:
-        st.warning("No confusion matrix available. Run predictions with true labels first.")
 
 # --- Feature Importance Tab ---
 elif page == "Feature Importance":
