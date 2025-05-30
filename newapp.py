@@ -11,12 +11,12 @@ from sklearn.metrics import (
 st.set_page_config(page_title="Drought Predictor", layout="wide")
 
 LABEL_MAP = {
-    0: 'No Drought (None)',
-    1: 'D0 - Abnormally Dry',
-    2: 'D1 - Moderate Drought',
-    3: 'D2 - Severe Drought',
-    4: 'D3 - Extreme Drought',
-    5: 'D4 - Exceptional Drought'
+    0: 'No Drought',
+    1: 'Abnormally Dry',
+    2: 'Moderate Drought',
+    3: 'Severe Drought',
+    4: 'Extreme Drought',
+    5: 'Exceptional Drought'
 }
 
 FEATURE_COLUMNS = [
