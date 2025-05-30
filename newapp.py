@@ -126,13 +126,6 @@ elif page == "Prediction Results":
             filtered = df
 
         st.dataframe(filtered[[*FEATURE_COLUMNS, "prediction", "drought_label"]].head(50))
-
-        st.download_button(
-            label="Download Filtered Results as CSV",
-            data=filtered.to_csv(index=False).encode(),
-            file_name="drought_predictions.csv",
-            mime="text/csv"
-        )
     else:
         st.info("Run predictions first in 'Upload Data' tab.")
 
