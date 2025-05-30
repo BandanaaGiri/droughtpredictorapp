@@ -27,7 +27,7 @@ FEATURE_COLUMNS = [
     'WS10M_RANGE', 'WS50M', 'WS50M_RANGE', 'year', 'lat', 'lon', 'GRS_LAND'
 ]
 
-st.title("🌾 Drought Severity Prediction App")
+st.title("🌾 Drought Scope ")
 
 @st.cache_resource(show_spinner="Loading model and scaler...")
 def load_artifacts():
