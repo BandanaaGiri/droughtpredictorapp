@@ -8,7 +8,7 @@ from sklearn.metrics import (
     f1_score, confusion_matrix
 )
 
-st.set_page_config(page_title="Drought Predictor", layout="wide")
+st.set_page_config(page_title="Drought Scope", layout="wide")
 
 
 st.sidebar.image("logo.png", width=300)  
