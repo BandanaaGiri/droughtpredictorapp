@@ -11,7 +11,7 @@ from sklearn.metrics import (
 st.set_page_config(page_title="Drought Predictor", layout="wide")
 
 
-st.image("logo.png", width=300)  
+st.sidebar.image(("logo.png", width=300)  
 
 LABEL_MAP = {
     0: 'No Drought',
