@@ -1,4 +1,4 @@
-# Drought Scope - Drought Severity Prediction Web App
+# Drought Scope - A Drought Severity Prediction Web App
 
 ![Drought Scope Logo](logo.png)
 
